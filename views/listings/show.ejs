@@ -1,0 +1,98 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<body>
+  <br />
+
+  <div class="row">
+    <!-- Div 1 -->
+    <div class="col-6">
+      <h1><%= list.title %></h1>
+      <p><%= list.location %>, <%= list.country %></p>
+      <div class="about-div">
+        <h5>About This:</h5>
+        <p><%= list.about %></p>
+      </div>
+
+      <div class="price-div d-flex unflex-div-n">
+        <h5>Price: &nbsp;</h5>
+        <p>&#8377; <%= list.price.toLocaleString("en-IN") %></p>
+      </div>
+
+      <div class="d-flex unflex-div-n">
+        <a href="/stazy/<%= list._id %>/edit" class="btn btn-primary"> Edit </a>
+        &nbsp;&nbsp;&nbsp;
+        <form action="/stazy/<%= list._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+
+      <hr />
+
+      <!-- Comments & Ratings -->
+      <div class="row">
+        <label for="comment" class="form-label"><h5>Comment</h5></label>
+
+        <form
+          action="/stazy/<%= list._id %>/review"
+          method="POST"
+          class="needs-validation"
+          novalidate
+        >
+          <!-- Do comment area -->
+          <div>
+            <textarea
+              name="review[comment]"
+              class="form-control"
+              placeholder="Write your thoughts..."
+              required
+            ></textarea>
+            <div class="invalid-feedback">Can't send empty comment.</div>
+            <br />
+            <button class="btn btn-primary" style="width: 4rem">
+              <!-- <i class="fas fa-paper-plane"></i> -->
+              Send
+            </button>
+            <br /><br />
+          </div>
+        </form>
+
+        <hr />
+
+        <!-- Show comment area -->
+        <div class="row">
+          <h5>All Comments</h5>
+
+          <hr />
+          <div>
+            <% for( let review of list.reviews) { %>
+            <div class="review-class">
+              <p><b>@_bbbfamous</b> <%= review.comment %></p>
+              <div>
+                <!-- <button>Edit</button> -->
+                <form
+                  action="/stazy/<%= list._id %>/review/<%= review._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+            <hr />
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Div 2 -->
+    <div class="col-6">
+      <img
+        src="<%= list.image %>"
+        class="rounded-3"
+        style="width: 100%"
+        alt="..."
+      />
+    </div>
+  </div>
+  <br />
+</body>

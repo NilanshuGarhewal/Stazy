@@ -1,0 +1,24 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+  
+  <h1>All Listings</h1>
+  <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1">
+    <% for(let listing of allListings) { %>
+    <a href="/stazy/<%= listing._id %>" class="dis-link">
+      <div class="card col" style="width: 20rem">
+        <img src="<%= listing.image %>" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.title %></h5>
+          <div>
+            <p class="card-text">
+              &#8377; <%= listing.price.toLocaleString("en-IN") %>
+              <small>/night</small>
+            </p>
+            <!-- <a href="/stazy/<%= listing._id %>" class="btn btn-primary">View</a> -->
+          </div>
+        </div>
+      </div>
+    </a>
+    <% } %>
+  </div>
+</body>

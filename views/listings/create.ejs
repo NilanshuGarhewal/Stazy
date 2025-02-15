@@ -1,0 +1,100 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="row">
+  <div class="col-8 offset-2">
+    <br />
+    <h1>Create with Stazy</h1>
+    <br />
+    <form action="/stazy" method="POST" novalidate class="needs-validation">
+      <div>
+        <label for="title" class="form-label">Enter Title</label>
+        <input
+          type="text"
+          class="form-control"
+          name="listing[title]"
+          placeholder="Enter your title..."
+          required
+          min="1"
+          max="80"
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please choose a title.</div>
+      </div>
+      <br />
+
+      <div>
+        <label for="about" class="form-label">Enter About</label>
+        <textarea
+          type="text"
+          name="listing[about]"
+          placeholder="Tell something about your listing..."
+          class="form-control"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please write about your listing.</div>
+      </div>
+      <br />
+      <div>
+        <label for="image" class="form-label"> Enter Image URL</label>
+        <input
+          type="url"
+          class="form-control"
+          name="listing[image]"
+          placeholder="Enter image url..."
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please uplode the image.</div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Enter Price</label>
+          <input
+            type="price"
+            class="form-control"
+            name="listing[price]"
+            placeholder="What about 12000?"
+            required
+            min="500"
+            max="100000000"
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter the price above 500.</div>
+        </div>
+        <br />
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-label">Enter Country</label>
+          <input
+            type="text"
+            name="listing[country]"
+            placeholder="India"
+            class="form-control"
+            required
+            min="1"
+            max="20"
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please choose a country.</div>
+        </div>
+      </div>
+      <br />
+      <div>
+        <label for="location" class="form-label">Enter Location</label>
+        <input
+          type="text"
+          name="listing[location]"
+          placeholder="Delhi, U.P."
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please choose a location.</div>
+      </div>
+      <br />
+      <button class="btn btn-primary">Upload</button>
+      <br />
+      <br />
+    </form>
+  </div>
+</div>

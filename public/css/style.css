@@ -1,0 +1,55 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
+  margin-right: 0.6rem;
+}
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  height: 20rem !important;
+  object-fit: cover !important;
+}
+
+.card:hover {
+  transform: scale(0.95);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-body {
+  padding: 8px 0 !important;
+}
+
+.card-text {
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+}
+
+.d-flex {
+  justify-content: space-between;
+}
+
+.dis-link {
+  text-decoration: none;
+}
+
+.unflex-div-n {
+  justify-content: flex-start !important;
+}
+
+.review-class {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
