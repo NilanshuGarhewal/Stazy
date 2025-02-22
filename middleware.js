@@ -42,7 +42,7 @@ module.exports.validateListing = (req, res, next) => {
 };
 
 // Middleware to validate review data
-const validateReview = (req, res, next) => {
+module.exports.validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
   if (error) {
     throw new ExpressError(

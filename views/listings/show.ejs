@@ -29,10 +29,10 @@
       </div>
       <% } %>
 
-      <hr />
-
       <!-- Comments & Ratings -->
       <div class="row">
+        <% if (currentUser) { %>
+        <hr />
         <label for="comment" class="form-label"><h5>Comment</h5></label>
 
         <form
@@ -58,10 +58,12 @@
             <br /><br />
           </div>
         </form>
-
-        <hr />
+        <% } %>
 
         <!-- Show comment area -->
+
+        <% //if (list.reviews.length > 0) { %>
+        <hr />
         <div class="row">
           <h5>All Comments</h5>
 
@@ -69,7 +71,7 @@
           <div>
             <% for( let review of list.reviews) { %>
             <div class="review-class">
-              <p><b>@_bbbfamous</b> <%= review.comment %></p>
+              <p><b>@<%= review.author.username %></b> <%= review.comment %></p>
               <div>
                 <!-- <button>Edit</button> -->
                 <form
@@ -84,6 +86,7 @@
             <% } %>
           </div>
         </div>
+        <%// } %>
       </div>
     </div>
 

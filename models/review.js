@@ -8,6 +8,10 @@ const reviewSchema = new mongoose.Schema({
     max: 5,
   },
   created_at: { type: Date, default: Date.now() },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Review = mongoose.model("Review", reviewSchema);

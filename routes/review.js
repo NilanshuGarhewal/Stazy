@@ -4,7 +4,7 @@ const Listing = require("../models/listing");
 const Review = require("../models/review.js");
 const wrapAsync = require("../utils/WrapAsync");
 const ExpressError = require("../utils/ExpressError");
-const { validateReview } = require("../middleware");
+const {validateReview } = require("../middleware");
 
 // Route to create a new review
 router.post(
@@ -13,7 +13,7 @@ router.post(
   wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     const newReview = new Review(req.body.review);
-
+    newReview.author = req.user._id;
     listing.reviews.push(newReview);
 
     await newReview.save();
