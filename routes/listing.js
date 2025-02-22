@@ -9,8 +9,10 @@ router.use(methodOverride("_method"));
 
 const listingController = require("../controllers/listing");
 
-// Home page route
-router.get("/", wrapAsync(listingController.home));
+router
+  .route("/")
+  .get(wrapAsync(listingController.home)) // Home page
+  .post(validateListing, wrapAsync(listingController.createListing)); // Create a new listing
 
 // Render create listing
 router.get(
@@ -19,11 +21,21 @@ router.get(
   wrapAsync(listingController.renderCreateListing)
 );
 
-// Create a new listing
-router.post("/", validateListing, wrapAsync(listingController.createListing));
-
 // Show route
-router.get("/:id", wrapAsync(listingController.showListing));
+router
+  .route("/:id")
+  .get(wrapAsync(listingController.showListing)) // Show a listing
+  .put(
+    isLoggedIn,
+    isOwner,
+    validateListing,
+    wrapAsync(listingController.updateListing) // Update a listing
+  )
+  .delete(
+    isLoggedIn,
+    isOwner,
+    wrapAsync(listingController.deleteListing) // Delete a listing
+  );
 
 // Render the edit page
 router.get(
@@ -31,23 +43,6 @@ router.get(
   isLoggedIn,
   isOwner,
   wrapAsync(listingController.renderEditPage)
-);
-
-// Route to update a listing
-router.put(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  validateListing,
-  wrapAsync(listingController.updateListing)
-);
-
-// Delete route
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.deleteListing)
 );
 
 module.exports = router;

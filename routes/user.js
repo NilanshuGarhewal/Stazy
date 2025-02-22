@@ -7,25 +7,23 @@ const wrapAsync = require("../utils/wrapAsync");
 
 const userController = require("../controllers/user");
 
-// Render signup form
-router.get("/signup", userController.renderSignupForm);
-
-// Handle signup logic
-router.post("/signup", wrapAsync(userController.signup));
+router
+  .route("/signup")
+  .get(userController.renderSignupForm) // Render signup form
+  .post(wrapAsync(userController.signup)); // Handle signup logic
 
 // Render login form
-router.get("/login", userController.renderLoginForm);
-
-// Handle login logic
-router.post(
-  "/login",
-  saveRedirectUrl,
-  passport.authenticate("local", {
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
-  userController.login
-);
+router
+  .route("/login")
+  .get(userController.renderLoginForm) // Render login form
+  .post(
+    saveRedirectUrl,
+    passport.authenticate("local", {
+      failureRedirect: "/login",
+      failureFlash: true,
+    }),
+    userController.login
+  ); // Handle login logic
 
 // Handle logout logic
 router.get("/logout", userController.logout);
