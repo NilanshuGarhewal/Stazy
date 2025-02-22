@@ -6,12 +6,9 @@ const ejs = require("ejs");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const Listing = require("./models/listing");
-const Review = require("./models/review.js");
 const ExpressError = require("./utils/ExpressError");
 const expressSession = require("express-session");
 const flash = require("connect-flash");
-const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
@@ -63,6 +60,8 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.returnTo = req.session.returnTo;
+  delete req.session.returnTo;
   res.locals.currentUser = req.user;
   next();
 });

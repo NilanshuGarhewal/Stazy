@@ -3,33 +3,18 @@ const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
 const { saveRedirectUrl } = require("../middleware");
+const wrapAsync = require("../utils/wrapAsync");
+
+const userController = require("../controllers/user");
 
 // Render signup form
-router.get("/signup", (req, res) => {
-  res.render("users/signup.ejs");
-});
+router.get("/signup", userController.renderSignupForm);
 
 // Handle signup logic
-router.post("/signup", async (req, res, next) => {
-  try {
-    const { username, email, password } = req.body;
-    const newUser = new User({ email, username });
-    const registeredUser = await User.register(newUser, password);
-    req.login(registeredUser, (err) => {
-      if (err) return next(err);
-      req.flash("success", "Welcome to Stazy!");
-      res.redirect("/stazy");
-    });
-  } catch (e) {
-    req.flash("error", e.message);
-    res.redirect("/signup");
-  }
-});
+router.post("/signup", wrapAsync(userController.signup));
 
 // Render login form
-router.get("/login", (req, res) => {
-  res.render("users/login.ejs");
-});
+router.get("/login", userController.renderLoginForm);
 
 // Handle login logic
 router.post(
@@ -39,21 +24,10 @@ router.post(
     failureRedirect: "/login",
     failureFlash: true,
   }),
-  (req, res) => {
-    req.flash("success", "Welcome back!");
-    const redirectUrl = req.session.returnTo || "/stazy";
-    delete req.session.returnTo;
-    res.redirect(redirectUrl);
-  }
+  userController.login
 );
 
 // Handle logout logic
-router.get("/logout", (req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    req.flash("success", "Goodbye!");
-    res.redirect("/stazy");
-  });
-});
+router.get("/logout", userController.logout);
 
 module.exports = router;
