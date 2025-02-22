@@ -12,9 +12,9 @@ router.get("/signup", (req, res) => {
 // Handle signup logic
 router.post("/signup", async (req, res, next) => {
   try {
-    const { email, username, password } = req.body;
-    const user = new User({ email, username });
-    const registeredUser = await User.register(user, password);
+    const { username, email, password } = req.body;
+    const newUser = new User({ email, username });
+    const registeredUser = await User.register(newUser, password);
     req.login(registeredUser, (err) => {
       if (err) return next(err);
       req.flash("success", "Welcome to Stazy!");
