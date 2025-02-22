@@ -19,6 +19,7 @@
         <p>&#8377; <%= list.price.toLocaleString("en-IN") %></p>
       </div>
 
+      <% if (currentUser && currentUser._id.equals(list.owner._id)) { %>
       <div class="d-flex unflex-div-n">
         <a href="/stazy/<%= list._id %>/edit" class="btn btn-primary"> Edit </a>
         &nbsp;&nbsp;&nbsp;
@@ -26,6 +27,7 @@
           <button class="btn btn-danger">Delete</button>
         </form>
       </div>
+      <% } %>
 
       <hr />
 
