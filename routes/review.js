@@ -4,7 +4,7 @@ const Listing = require("../models/listing");
 const Review = require("../models/review.js");
 const wrapAsync = require("../utils/WrapAsync");
 const ExpressError = require("../utils/ExpressError");
-const {validateReview } = require("../middleware");
+const { validateReview, isReviewAuthor, isLoggedIn } = require("../middleware");
 
 // Route to create a new review
 router.post(
@@ -26,6 +26,8 @@ router.post(
 // Route to delete a review
 router.delete(
   "/:reviewId",
+  isLoggedIn,
+  isReviewAuthor,
   wrapAsync(async (req, res) => {
     const { id, reviewId } = req.params;
 

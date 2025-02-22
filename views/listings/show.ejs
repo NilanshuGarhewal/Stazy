@@ -28,6 +28,7 @@
         </form>
       </div>
       <% } %>
+      <br />
 
       <!-- Comments & Ratings -->
       <div class="row">
@@ -72,6 +73,8 @@
             <% for( let review of list.reviews) { %>
             <div class="review-class">
               <p><b>@<%= review.author.username %></b> <%= review.comment %></p>
+              
+              <% if (review.author.username === currentUser.username) { %>
               <div>
                 <!-- <button>Edit</button> -->
                 <form
@@ -81,6 +84,8 @@
                   <button class="btn btn-danger">Delete</button>
                 </form>
               </div>
+              <% } %>
+
             </div>
             <hr />
             <% } %>
