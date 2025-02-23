@@ -11,13 +11,20 @@ const listingController = require("../controllers/listing");
 
 // Require multer
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+
+const { cloudinary, storage } = require("../cloudConfig");
+
+const upload = multer({ storage });
 
 router
   .route("/")
   .get(wrapAsync(listingController.home)) // Home page
-  // .post(validateListing, wrapAsync(listingController.createListing)); // Create a new listing
-  .post(upload.single("image"), wrapAsync(listingController.createListing)); // Create a new listing
+  .post(
+    isLoggedIn,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.createListing)
+  ); // Create a new listing
 
 // Render create listing
 router.get(
