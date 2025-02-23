@@ -5,7 +5,13 @@
     <br />
     <h1>Create with Stazy</h1>
     <br />
-    <form action="/stazy" method="POST" novalidate class="needs-validation">
+    <form
+      action="/stazy"
+      method="POST"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
       <div>
         <label for="title" class="form-label">Enter Title</label>
         <input
@@ -35,17 +41,18 @@
         <div class="invalid-feedback">Please write about your listing.</div>
       </div>
       <br />
+
       <div>
-        <label for="image" class="form-label"> Enter Image URL</label>
+        <label for="image" class="form-label">Upload Image</label>
         <input
-          type="url"
+          type="file"
           class="form-control"
           name="listing[image]"
-          placeholder="Enter image url..."
         />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Please uplode the image.</div>
       </div>
+
       <br />
       <div class="row">
         <div class="mb-3 col-md-4">
