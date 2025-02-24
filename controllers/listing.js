@@ -12,7 +12,7 @@ module.exports.renderCreateListing = async (req, res) => {
 module.exports.createListing = async (req, res) => {
   let url = req.file.path;
   let filename = req.file.filename;
-  console.log(url, filename);
+
   const newListing = new Listing(req.body.listing);
 
   newListing.image = { url, filename };
@@ -47,12 +47,24 @@ module.exports.renderEditPage = async (req, res) => {
     req.flash("error", "Cannot find that listing!");
     return res.redirect("/stazy");
   }
-  res.render("listings/edit.ejs", { list });
+
+  let originalImageUrl = list.image.url;
+  originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
+
+  res.render("listings/edit.ejs", { list, originalImageUrl });
 };
 
 module.exports.updateListing = async (req, res) => {
   const { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  if (typeof req.file !== "undefined") {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    listing.image = { url, filename };
+    await listing.save();
+  }
+
   req.flash("success", "Successfully edited the listing!");
   res.redirect(`/stazy/${id}`);
 };
