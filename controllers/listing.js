@@ -35,7 +35,7 @@ module.exports.createListing = async (req, res) => {
       coordinates: geometry.coordinates,
     };
 
-    let savedListing = await newListing.save();
+    await newListing.save();
 
     req.flash("success", "Successfully created a new listing!");
     res.redirect("/stazy");
@@ -80,6 +80,20 @@ module.exports.renderEditPage = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
   const { id } = req.params;
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  let response = await geocodingClient
+    .forwardGeocode({
+      query: listing.location,
+      limit: 1,
+    })
+    .send();
+
+  const geometry = response.body.features[0].geometry;
+
+  listing.geometry = {
+    type: geometry.type,
+    coordinates: geometry.coordinates,
+  };
 
   if (typeof req.file !== "undefined") {
     let url = req.file.path;
