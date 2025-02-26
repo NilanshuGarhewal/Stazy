@@ -53,3 +53,9 @@ body {
   justify-content: center;
 }
 
+/* Map */
+
+#map {
+  height: 200px;
+  width: 200px;
+}

@@ -1,5 +1,10 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
+<script>
+  let mapToken = "<%= process.env.MAP_TOKEN %>";
+  let listing = <%- JSON.stringify(list) %>;
+</script>
+
 <body>
   <br />
 
@@ -27,8 +32,8 @@
           <button class="btn btn-danger">Delete</button>
         </form>
       </div>
-      <% } %>
       <br />
+      <% } %>
 
       <!-- Comments & Ratings -->
       <div class="row">
@@ -63,7 +68,7 @@
 
         <!-- Show comment area -->
 
-        <% //if (list.reviews.length > 0) { %>
+        <% if (list.reviews.length > 0) { %>
         <hr />
         <div class="row">
           <h5>All Comments</h5>
@@ -88,7 +93,7 @@
             <% } %>
           </div>
         </div>
-        <%// } %>
+        <%} %>
       </div>
     </div>
 
@@ -102,5 +107,15 @@
       />
     </div>
   </div>
+
+  <hr />
+
+  <div>
+    <h3>Where you'll be</h3>
+    <div id="map" style="width: 100%; height: 400px"></div>
+  </div>
+
   <br />
 </body>
+
+<script src="/js/mapBox.js"></script>

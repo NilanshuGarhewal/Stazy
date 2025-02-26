@@ -1,4 +1,7 @@
 const Listing = require("../models/listing");
+const mpxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mpxGeocoding({ accessToken: mapToken });
 
 module.exports.home = async (req, res, next) => {
   const allListings = await Listing.find({});
@@ -10,17 +13,37 @@ module.exports.renderCreateListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
-  let url = req.file.path;
-  let filename = req.file.filename;
+  try {
+    let response = await geocodingClient
+      .forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1,
+      })
+      .send();
 
-  const newListing = new Listing(req.body.listing);
+    let url = req.file.path;
+    let filename = req.file.filename;
 
-  newListing.image = { url, filename };
+    const newListing = new Listing(req.body.listing);
 
-  newListing.owner = req.user._id;
-  await newListing.save();
-  req.flash("success", "Successfully created a new listing!");
-  res.redirect("/stazy");
+    newListing.image = { url, filename };
+    newListing.owner = req.user._id;
+
+    const geometry = response.body.features[0].geometry;
+    newListing.geometry = {
+      type: geometry.type,
+      coordinates: geometry.coordinates,
+    };
+
+    let savedListing = await newListing.save();
+
+    req.flash("success", "Successfully created a new listing!");
+    res.redirect("/stazy");
+  } catch (e) {
+    console.error(e);
+    req.flash("error", "Failed to create a new listing.");
+    res.redirect("/stazy/create");
+  }
 };
 
 module.exports.showListing = async (req, res) => {
