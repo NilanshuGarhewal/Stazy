@@ -25,7 +25,7 @@ To set up Stazy locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/stazy.git
+   git clone https://github.com/NilanshuGarhewal/Stazy.git
    ```
 2. Navigate to the project directory:
    ```bash
