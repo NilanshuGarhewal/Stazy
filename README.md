@@ -48,7 +48,7 @@ To set up Stazy locally, follow these steps:
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! If you’d like to enhance Stazy, feel free to fork this repository and submit a pull request. Please follow the contribution guidelines for a smooth collaboration.
+We welcome contributions from the community! If you’d like to enhance Stazy, feel free to fork this repository and submit a pull request. Please follow the contribution guidelines for a smooth collaboration. You can add search here.
 
 ## 📜 License
 
